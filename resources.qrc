@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/alarm-bell.png</file>
+        <file>res/alarm-bell-large.png</file>
+    </qresource>
+</RCC>
