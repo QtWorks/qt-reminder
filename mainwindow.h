@@ -20,6 +20,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+// Private slots
+private slots:
+    void addReminder();
+    void showAllReminders();
+
 // Private variables
 private:
     Ui::MainWindow *ui;
@@ -32,8 +37,8 @@ private:
     unique_ptr<QMenu> trayMenu;
 
     unique_ptr<QAction> addReminderAction;
+    unique_ptr<QAction> showAllRemindersAction;
     unique_ptr<QAction> quitAction;
-
 };
 
 #endif // MAINWINDOW_H

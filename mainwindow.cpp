@@ -15,19 +15,31 @@ MainWindow::MainWindow(QWidget *parent) :
         QApplication::exit(-1);
     }
 
+    // MainWindowConfiguration
     this->setWindowIcon(this->largeIcon);
+    this->setWindowTitle("Simple notifier");
 
 
     // Tray action creation
-    this->quitAction.reset(new QAction(tr("Quit"), this));
+    this->addReminderAction.reset(new QAction{tr("Add reminder"), this});
+    connect(this->addReminderAction.get(), SIGNAL(triggered()), this, SLOT(addReminder()));
+
+    this->showAllRemindersAction.reset(new QAction{tr("Show all reminders"), this});
+    connect(this->showAllRemindersAction.get(), SIGNAL(triggered()), this, SLOT(showAllReminders()));
+
+    this->quitAction.reset(new QAction{tr("Quit"), this});
     connect(this->quitAction.get(), SIGNAL(triggered()), qApp, SLOT(quit()));
 
+
     // Tray menu creation
-    this->trayMenu.reset(new QMenu(this));
+
+    this->trayMenu.reset(new QMenu{this});
+    this->trayMenu->addAction(this->addReminderAction.get());
+    this->trayMenu->addAction(this->showAllRemindersAction.get());
     this->trayMenu->addAction(this->quitAction.get());
 
     // Tray icon creation
-    this->trayIcon.reset(new QSystemTrayIcon(this));
+    this->trayIcon.reset(new QSystemTrayIcon{this});
 
     this->trayIcon->setIcon(this->smallIcon);
     this->trayIcon->setContextMenu(this->trayMenu.get());
@@ -38,4 +50,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::addReminder()
+{
+    // TODO
+}
+
+void MainWindow::showAllReminders()
+{
+    this->show();
 }
