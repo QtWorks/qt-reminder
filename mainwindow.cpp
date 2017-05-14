@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include <iostream>
+#include <addreminderdialog.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -54,7 +54,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::addReminder()
 {
-    // TODO
+    AddReminderDialog reminderDialog{this};
+    reminderDialog.exec();
 }
 
 void MainWindow::showAllReminders()

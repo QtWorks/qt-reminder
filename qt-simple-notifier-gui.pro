@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 
+INCLUDEPATH += ../qt-simple-notifier
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
 QT       += core gui
@@ -14,12 +15,15 @@ TARGET = qt-simple-notifier-gui
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES += main.cpp \
+        mainwindow.cpp \
+    addreminderdialog.cpp
 
-HEADERS  += mainwindow.h
+HEADERS += mainwindow.h \
+    addreminderdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    addreminderdialog.ui
 
 RESOURCES += \
     resources.qrc
