@@ -4,6 +4,12 @@
 #
 #-------------------------------------------------
 
+template = subdirs
+SUBDIRS += ../qt-simple-notifier
+
+#include(../qt-simple-notifier/qt-simple-notifier/inc/*)
+#include(../qt-simple-notifier/qt-simple-notifier/src/*)
+
 INCLUDEPATH += ../qt-simple-notifier
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
@@ -17,13 +23,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
         mainwindow.cpp \
-    addreminderdialog.cpp
+    createreminderdialog.cpp
 
 HEADERS += mainwindow.h \
-    addreminderdialog.h
+    createreminderdialog.h
 
 FORMS    += mainwindow.ui \
-    addreminderdialog.ui
+    createreminderdialog.ui
 
 RESOURCES += \
     resources.qrc

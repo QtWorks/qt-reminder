@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include <addreminderdialog.h>
+#include <createreminderdialog.h>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Tray action creation
     this->addReminderAction.reset(new QAction{tr("Add reminder"), this});
-    connect(this->addReminderAction.get(), SIGNAL(triggered()), this, SLOT(addReminder()));
+    connect(this->addReminderAction.get(), SIGNAL(triggered()), this, SLOT(createReminder()));
 
     this->showAllRemindersAction.reset(new QAction{tr("Show all reminders"), this});
     connect(this->showAllRemindersAction.get(), SIGNAL(triggered()), this, SLOT(showAllReminders()));
@@ -54,11 +55,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::addReminder()
 {
-    AddReminderDialog reminderDialog{this};
-    reminderDialog.exec();
+    qDebug() <<"Add reminder";
 }
 
 void MainWindow::showAllReminders()
 {
     this->show();
+}
+
+void MainWindow::createReminder()
+{
+    CreateReminderDialog reminderDialog{this};
+
+    switch(int value = reminderDialog.exec())
+    {
+        default:
+        {
+            qDebug() << value;
+        }
+    }
 }

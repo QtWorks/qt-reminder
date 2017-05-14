@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddReminderDialog</class>
- <widget class="QDialog" name="AddReminderDialog">
+ <class>CreateReminderDialog</class>
+ <widget class="QDialog" name="CreateReminderDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -40,16 +40,23 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Timeout</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-       <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QTimeEdit" name="timeEdit">
+         <property name="displayFormat">
+          <string>HH:mm:ss</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="checkBox">
@@ -69,7 +76,7 @@
         <x>0</x>
         <y>40</y>
         <width>641</width>
-        <height>51</height>
+        <height>41</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -117,14 +124,23 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>92</y>
+        <y>82</y>
         <width>641</width>
-        <height>141</height>
+        <height>151</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QLabel" name="label_3">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Description</string>
          </property>

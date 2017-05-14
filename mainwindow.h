@@ -24,6 +24,7 @@ public:
 private slots:
     void addReminder();
     void showAllReminders();
+    void createReminder();
 
 // Private variables
 private:
