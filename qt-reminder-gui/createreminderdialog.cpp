@@ -1,5 +1,6 @@
 #include "createreminderdialog.h"
 #include "ui_createreminderdialog.h"
+#include <QCloseEvent>
 #include <QDebug>
 
 CreateReminderDialog::CreateReminderDialog(QWidget *parent) :
@@ -25,4 +26,11 @@ void CreateReminderDialog::onOkClicked()
 void CreateReminderDialog::onCancelClicked()
 {
     this->close();
+}
+
+
+void CreateReminderDialog::closeEvent(QCloseEvent *event)
+{
+    QDialog::closeEvent(event);
+    event->ignore();
 }

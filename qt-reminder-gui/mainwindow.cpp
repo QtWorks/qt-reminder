@@ -4,6 +4,7 @@
 #include <createreminderdialog.h>
 #include <QDebug>
 #include <QtReminder/DatabaseManager.h>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -74,5 +75,14 @@ void MainWindow::createReminder()
         {
             qDebug() << value;
         }
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if(this->isVisible())
+    {
+        this->hide();
+        event->ignore();
     }
 }
