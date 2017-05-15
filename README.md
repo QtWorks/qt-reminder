@@ -1,2 +1,2 @@
 # qt-reminder
-Repository for qt-reminder. Simple app for people woth weak memory as mine.
+Repository for qt-reminder. Simple app for people with weak memory as mine.
