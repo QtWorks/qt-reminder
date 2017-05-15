@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <createreminderdialog.h>
 #include <QDebug>
+#include <QtReminder/DatabaseManager.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

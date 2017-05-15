@@ -5,10 +5,12 @@
 #-------------------------------------------------
 
 template = subdirs
-SUBDIRS += ../qt-reminder
+INCLUDEPATH += ../qt-reminder-cli/inc
+INCLUDEPATH += ../qt-reminder-cli/src
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
+QT += sql
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -29,7 +31,3 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     resources.qrc
-
-DISTFILES += \
-    LICENSE \
-    README.md
