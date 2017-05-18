@@ -22,9 +22,6 @@ private slots:
 
 private:
     Ui::CreateReminderDialog *ui;
-
-protected:
-    void closeEvent(QCloseEvent *) override;
 };
 
 #endif // CREATEREMINDERDIALOG_H

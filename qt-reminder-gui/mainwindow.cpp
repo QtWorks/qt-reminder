@@ -78,11 +78,3 @@ void MainWindow::createReminder()
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    if(this->isVisible())
-    {
-        this->hide();
-        event->ignore();
-    }
-}

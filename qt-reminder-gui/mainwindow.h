@@ -20,10 +20,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-// Protected methods
-protected:
-    void closeEvent(QCloseEvent *) override;
-
 // Private slots
 private slots:
     void addReminder();

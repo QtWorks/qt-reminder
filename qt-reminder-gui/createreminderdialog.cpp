@@ -27,10 +27,3 @@ void CreateReminderDialog::onCancelClicked()
 {
     this->close();
 }
-
-
-void CreateReminderDialog::closeEvent(QCloseEvent *event)
-{
-    QDialog::closeEvent(event);
-    event->ignore();
-}
