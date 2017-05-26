@@ -14,11 +14,15 @@ INCLUDEPATH += inc/ \
 
 # Input
 SOURCES += main.cpp \
-    src/QtReminder/DatabaseManager.cpp
+    src/QtReminder/DatabaseManager.cpp \
+    src/QtReminder/Reminder.cpp \
+    src/QtReminder/ReminderManager.cpp
 
 DISTFILES += \
     LICENSE \
     README.md
 
 HEADERS += \
-    inc/QtReminder/DatabaseManager.h
+    inc/QtReminder/DatabaseManager.h \
+    inc/QtReminder/Reminder.h \
+    inc/QtReminder/ReminderManager.h

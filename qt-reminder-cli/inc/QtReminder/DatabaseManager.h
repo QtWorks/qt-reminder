@@ -17,7 +17,7 @@ namespace QtReminder
  */
 class DatabaseManager
 {
-    ///Qt database object
+    /// Qt database object
     QSqlDatabase db;
 
     /// Program database name

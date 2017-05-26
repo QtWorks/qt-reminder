@@ -24,4 +24,4 @@ DatabaseManager& DatabaseManager::get_instance()
     return db_manager;
 }
 
-} // namespace QtSimpleNotifier
+} // namespace QtReminder
