@@ -4,7 +4,10 @@
 #include <createreminderdialog.h>
 #include <QDebug>
 #include <QtReminder/DatabaseManager.h>
+#include <QtReminder/Reminder.h>
 #include <QCloseEvent>
+
+using QtReminder::Reminder;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Tray action creation
     this->addReminderAction.reset(new QAction{tr("Add reminder"), this});
-    connect(this->addReminderAction.get(), SIGNAL(triggered()), this, SLOT(createReminder()));
+    connect(this->addReminderAction.get(), SIGNAL(triggered()), this, SLOT(showCreateReminderWindow()));
 
     this->showAllRemindersAction.reset(new QAction{tr("Show all reminders"), this});
     connect(this->showAllRemindersAction.get(), SIGNAL(triggered()), this, SLOT(showAllReminders()));
@@ -65,7 +68,7 @@ void MainWindow::showAllReminders()
     this->show();
 }
 
-void MainWindow::createReminder()
+void MainWindow::showCreateReminderWindow()
 {
     CreateReminderDialog reminderDialog{this};
 
@@ -78,3 +81,8 @@ void MainWindow::createReminder()
     }
 }
 
+void MainWindow::createReminder(QDateTime run_time, const shared_ptr<wstring> title,
+                                const shared_ptr<wstring> description)
+{
+    this->manager.append_reminder(*(new Reminder{run_time, title, description}));
+}

@@ -1,12 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDateTime>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <memory>
+#include <QtReminder/ReminderManager.h>
 
-using std::unique_ptr;
+using namespace std;
 
 namespace Ui {
 class MainWindow;
@@ -17,14 +19,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void createReminder(QDateTime, const shared_ptr<wstring>, const shared_ptr<wstring>);
 
 // Private slots
 private slots:
     void addReminder();
     void showAllReminders();
-    void createReminder();
+    void showCreateReminderWindow();
 
 // Private variables
 private:
@@ -40,6 +44,8 @@ private:
     unique_ptr<QAction> addReminderAction;
     unique_ptr<QAction> showAllRemindersAction;
     unique_ptr<QAction> quitAction;
+
+    QtReminder::ReminderManager manager{};
 };
 
 #endif // MAINWINDOW_H

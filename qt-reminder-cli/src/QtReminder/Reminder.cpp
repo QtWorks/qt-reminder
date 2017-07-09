@@ -5,17 +5,25 @@ using namespace std;
 namespace QtReminder
 {
 
-Reminder::Reminder(QDateTime &run_time, const shared_ptr<string> title, const shared_ptr<string> description):
-    run_time{run_time}, title{title}, description{description}, created(QDateTime::currentDateTimeUtc())
-{}
+Reminder::Reminder(QDateTime &run_time, const shared_ptr<wstring> title, const shared_ptr<wstring> description):
+    title{title}, description{description}
+{
+    this->run_time.swap(run_time);
+}
 
-Reminder::Reminder(QDateTime &run_time, const shared_ptr<string> title, const shared_ptr<string> description,
+Reminder::Reminder(QDateTime &run_time, const shared_ptr<wstring> title, const shared_ptr<wstring> description,
                    QDateTime &created):
-    run_time{run_time}, title{title}, description{description}, created{created}
-{}
+    title{title}, description{description}
+{
+    this->run_time.swap(run_time);
+    this->created.swap(created);
+}
 
 Reminder::Reminder(const Reminder &r):
-    run_time{r.run_time}, title{r.title}, description{r.description},  created{r.created}
-{}
+    title{r.title}, description{r.description}
+{
+    this->run_time.swap(run_time);
+    this->created.swap(created);
+}
 
 } // namespace QtReminder

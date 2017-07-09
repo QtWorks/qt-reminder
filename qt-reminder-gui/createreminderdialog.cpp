@@ -2,10 +2,15 @@
 #include "ui_createreminderdialog.h"
 #include <QCloseEvent>
 #include <QDebug>
+#include <QDateTime>
+#include <memory>
+#include <mainwindow.h>
+
+using namespace std;
 
 CreateReminderDialog::CreateReminderDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::CreateReminderDialog)
+    QDialog{parent},
+    ui{new Ui::CreateReminderDialog}
 {
     ui->setupUi(this);
 
@@ -20,7 +25,18 @@ CreateReminderDialog::~CreateReminderDialog()
 
 void CreateReminderDialog::onOkClicked()
 {
-    qDebug() <<"ok";
+    // TODO add QTime to QDateTime, because this only replace time and this is BUG
+    QDateTime run_time{QDateTime::currentDateTimeUtc()};
+    run_time.setTime(this->ui->timeEdit->time());
+    const shared_ptr<wstring> title = make_shared<wstring>(this->ui->lineEdit->text().toStdWString());
+    const shared_ptr<wstring> description = make_shared<wstring>(this->ui->textEdit->toPlainText().toStdWString());
+
+    MainWindow *parent = qobject_cast<MainWindow*>(this->parent());
+    if (parent != nullptr)
+    {
+        parent->createReminder(run_time, title, description);
+    }
+    this->close();
 }
 
 void CreateReminderDialog::onCancelClicked()

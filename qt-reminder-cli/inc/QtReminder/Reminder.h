@@ -1,6 +1,6 @@
 #ifndef REMINDER
 #define REMINDER
-#include <Qt/qdatetime.h>
+#include <QDateTime>
 #include <string>
 #include <memory>
 
@@ -18,10 +18,10 @@ class Reminder
     QDateTime run_time;
 
     /// Title of notification
-    std::shared_ptr<std::string> title;
+    std::shared_ptr<std::wstring> title;
 
     /// Full description
-    std::shared_ptr<std::string> description;
+    std::shared_ptr<std::wstring> description;
 
 public:
     /**
@@ -30,7 +30,7 @@ public:
      * @param title - Title of notification
      * @param description - Its description
      */
-    Reminder(QDateTime&, const std::shared_ptr<std::string>, const std::shared_ptr<std::string>);
+    Reminder(QDateTime&, const std::shared_ptr<std::wstring>, const std::shared_ptr<std::wstring>);
 
     /**
      * @brief Reminder - Ctor
@@ -39,7 +39,7 @@ public:
      * @param description - Its description
      * @param created - When this reminder was created
      */
-    Reminder(QDateTime&, const std::shared_ptr<std::string>, const std::shared_ptr<std::string>, QDateTime&);
+    Reminder(QDateTime&, const std::shared_ptr<std::wstring>, const std::shared_ptr<std::wstring>, QDateTime&);
 
 
     /**
