@@ -1,13 +1,16 @@
 #include <QtReminder/Reminder.h>
 
+using namespace std;
+
 namespace QtReminder
 {
 
-Reminder::Reminder(QDateTime &run_time, const std::string title, const std::string description):
-    run_time{run_time}, title{title}, description{description}, created{QDateTime.currentDateTimeUtc()}
+Reminder::Reminder(QDateTime &run_time, const shared_ptr<string> title, const shared_ptr<string> description):
+    run_time{run_time}, title{title}, description{description}, created(QDateTime::currentDateTimeUtc())
 {}
 
-Reminder::Reminder(QDateTime &run_time, const std::string title, const std::string description, QDateTime &created):
+Reminder::Reminder(QDateTime &run_time, const shared_ptr<string> title, const shared_ptr<string> description,
+                   QDateTime &created):
     run_time{run_time}, title{title}, description{description}, created{created}
 {}
 

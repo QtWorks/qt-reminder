@@ -2,6 +2,7 @@
 #define REMINDER
 #include <Qt/qdatetime.h>
 #include <string>
+#include <memory>
 
 namespace QtReminder
 {
@@ -11,16 +12,16 @@ namespace QtReminder
 class Reminder
 {
     /// Time where object was created
-    QDateTime &created;
+    QDateTime created;
 
     /// Time when notification have to be run
-    QDateTime &run_time;
+    QDateTime run_time;
 
     /// Title of notification
-    std::string &title;
+    std::shared_ptr<std::string> title;
 
     /// Full description
-    std::string &description;
+    std::shared_ptr<std::string> description;
 
 public:
     /**
@@ -29,7 +30,7 @@ public:
      * @param title - Title of notification
      * @param description - Its description
      */
-    Reminder(QDateTime&, const std::string, const std::string);
+    Reminder(QDateTime&, const std::shared_ptr<std::string>, const std::shared_ptr<std::string>);
 
     /**
      * @brief Reminder - Ctor
@@ -38,7 +39,7 @@ public:
      * @param description - Its description
      * @param created - When this reminder was created
      */
-    Reminder(QDateTime&, const std::string, const std::string, QDateTime&);
+    Reminder(QDateTime&, const std::shared_ptr<std::string>, const std::shared_ptr<std::string>, QDateTime&);
 
 
     /**

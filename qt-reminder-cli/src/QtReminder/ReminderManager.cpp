@@ -10,7 +10,7 @@ ReminderManager::~ReminderManager()
     this->reminders.clear();
 }
 
-ReminderManager::append_reminder(Reminder &r)
+void ReminderManager::append_reminder(Reminder &r)
 {
     this->reminders.push_back(r);
 }

@@ -24,7 +24,7 @@ public:
      * @brief append_reminder - function appending reminder to container
      * @param r - Reminder object
      */
-    void append_reminder(Reminder &);
+    void append_reminder(Reminder&);
 };
 
 }
