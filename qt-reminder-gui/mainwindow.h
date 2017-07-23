@@ -1,11 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
+
 #include <QDateTime>
 #include <QMainWindow>
-#include <QSystemTrayIcon>
 #include <QMenu>
-#include <memory>
+#include <QSystemTrayIcon>
+#include <QTimer>
+
+#include <QtReminder/Reminder.h>
 #include <QtReminder/ReminderManager.h>
 
 using namespace std;
@@ -22,15 +26,18 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void createReminder(QDateTime, const shared_ptr<wstring>, const shared_ptr<wstring>);
+    void createReminder(QDateTime, const shared_ptr<wstring>, const shared_ptr<wstring>, bool);
+    void removeReminder(int);
 
 // Private slots
 private slots:
-    void addReminder();
     void showAllReminders();
     void showCreateReminderWindow();
+    void showReminder();
 
 // Private variables
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -43,9 +50,13 @@ private:
 
     unique_ptr<QAction> addReminderAction;
     unique_ptr<QAction> showAllRemindersAction;
+    QTimer* timer;
     unique_ptr<QAction> quitAction;
 
     QtReminder::ReminderManager manager{};
+
+    void addReminderToWidgetList(QtReminder::Reminder&);
+    void registerReminder(QtReminder::Reminder&);
 };
 
 #endif // MAINWINDOW_H

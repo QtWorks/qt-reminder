@@ -6,7 +6,6 @@
 
 template = subdirs
 INCLUDEPATH += ../qt-reminder-cli/inc
-INCLUDEPATH += ../qt-reminder-cli/src
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
@@ -21,10 +20,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
         mainwindow.cpp \
-        createreminderdialog.cpp
+        createreminderdialog.cpp \
+        ../qt-reminder-cli/src/QtReminder/Reminder.cpp \
+        ../qt-reminder-cli/src/QtReminder/ReminderManager.cpp
 
 HEADERS += mainwindow.h \
-           createreminderdialog.h
+           createreminderdialog.h \
+           ../qt-reminder-cli/inc/QtReminder/Reminder.h \
+           ../qt-reminder-cli/inc/QtReminder/ReminderManager.h
 
 FORMS    += mainwindow.ui \
             createreminderdialog.ui

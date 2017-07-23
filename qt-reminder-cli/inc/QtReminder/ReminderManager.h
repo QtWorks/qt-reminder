@@ -25,6 +25,12 @@ public:
      * @param r - Reminder object
      */
     void append_reminder(Reminder&);
+
+    /**
+     * @brief remove_reminder - function removing reminder from container
+     * @param index - index of element
+     */
+    void remove_reminder(int);
 };
 
 }

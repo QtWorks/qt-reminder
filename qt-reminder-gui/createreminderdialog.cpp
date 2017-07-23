@@ -25,16 +25,19 @@ CreateReminderDialog::~CreateReminderDialog()
 
 void CreateReminderDialog::onOkClicked()
 {
-    // TODO add QTime to QDateTime, because this only replace time and this is BUG
-    QDateTime run_time{QDateTime::currentDateTimeUtc()};
-    run_time.setTime(this->ui->timeEdit->time());
+    QDateTime run_time{QDateTime::currentDateTime()};
+    QTime start_every = this->ui->timeEdit->time();
+
+    run_time = run_time.addMSecs(QTime(0, 0, 0).msecsTo(start_every));
+
     const shared_ptr<wstring> title = make_shared<wstring>(this->ui->lineEdit->text().toStdWString());
     const shared_ptr<wstring> description = make_shared<wstring>(this->ui->textEdit->toPlainText().toStdWString());
+    bool cyclic = this->ui->checkBox->isChecked();
 
     MainWindow *parent = qobject_cast<MainWindow*>(this->parent());
     if (parent != nullptr)
     {
-        parent->createReminder(run_time, title, description);
+        parent->createReminder(run_time, title, description, cyclic);
     }
     this->close();
 }

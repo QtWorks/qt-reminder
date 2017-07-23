@@ -10,8 +10,7 @@
 using QtReminder::Reminder;
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow{parent}, ui{new Ui::MainWindow}, timer{new QTimer{this}}
 {
     ui->setupUi(this);
 
@@ -56,11 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::addReminder()
-{
-    qDebug() <<"Add reminder";
+    delete timer;
 }
 
 void MainWindow::showAllReminders()
@@ -76,13 +71,58 @@ void MainWindow::showCreateReminderWindow()
     {
         default:
         {
-            qDebug() << value;
+//            qDebug() << value;
         }
     }
 }
 
-void MainWindow::createReminder(QDateTime run_time, const shared_ptr<wstring> title,
-                                const shared_ptr<wstring> description)
+void MainWindow::addReminderToWidgetList(QtReminder::Reminder &r)
 {
-    this->manager.append_reminder(*(new Reminder{run_time, title, description}));
+    this->ui->listWidget->addItem(QString::fromStdWString(*r.getTitle()));
+}
+
+void MainWindow::createReminder(QDateTime run_time, const shared_ptr<wstring> title,
+                                const shared_ptr<wstring> description, bool cyclic)
+{
+    Reminder *r = new Reminder{run_time, title, description, cyclic};
+    this->addReminderToWidgetList(*r);
+    this->manager.append_reminder(*r);
+    this->registerReminder(*r);
+}
+
+void MainWindow::removeReminder(int item_index)
+{
+    if (item_index < 0) { return; }
+
+    QListWidgetItem *item = this->ui->listWidget->takeItem(item_index);
+
+    this->ui->listWidget->removeItemWidget(item);
+    this->manager.remove_reminder(item_index);
+
+    delete item;
+}
+
+void MainWindow::showReminder()
+{
+    qDebug() << "REMINDER!!!!";
+}
+
+void MainWindow::registerReminder(QtReminder::Reminder &r)
+{
+    auto now = QDateTime::currentDateTime();
+
+    if(r.isCyclic())
+    {
+        connect(this->timer, SIGNAL(timeout()), SLOT(showReminder()));
+        this->timer->start(now.msecsTo(r.getRunTime()));
+    }
+    else
+    {
+        QTimer::singleShot(now.msecsTo(r.getRunTime()), this, SLOT(showReminder()));
+    }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    this->removeReminder(this->ui->listWidget->currentRow());
 }
