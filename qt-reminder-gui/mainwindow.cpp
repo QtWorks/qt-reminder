@@ -14,7 +14,7 @@
 using QtReminder::Reminder;
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow{parent}, ui{new Ui::MainWindow}, timer{new QTimer{this}}
+    QMainWindow{parent}, ui{new Ui::MainWindow}
 {
     ui->setupUi(this);
 
@@ -58,8 +58,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete this->ui;
-    this->timer->stop();
-    delete this->timer;
+    for(auto timer: this->timers)
+    {
+        timer->stop();
+        delete timer;
+    }
     for(auto sm: this->signal_mappers)
     {
         delete sm;
@@ -122,9 +125,13 @@ void MainWindow::registerReminder(QtReminder::Reminder &r)
     if(r.isCyclic())
     {
         auto *sm = new QSignalMapper{this};
+        auto *timer = new QTimer{this};
+
         this->signal_mappers.push_back(sm);
-        connect(this->timer, SIGNAL(timeout()), sm, SLOT(map()));
-        sm->setMapping(this->timer, r.getReminderId().toString());
+        this->timers.push_back(timer);
+
+        connect(timer, SIGNAL(timeout()), sm, SLOT(map()));
+        sm->setMapping(timer, r.getReminderId().toString());
         connect(sm, SIGNAL(mapped(QString)), this, SIGNAL(timeToRemind(const QString)));
         connect(this, SIGNAL(timeToRemind(const QString)), this, SLOT(showReminder(const QString)));
         timer->start(now.msecsTo(r.getRunTime()));

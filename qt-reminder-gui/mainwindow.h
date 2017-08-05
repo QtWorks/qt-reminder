@@ -54,7 +54,7 @@ private:
     unique_ptr<QAction> addReminderAction;
     unique_ptr<QAction> showAllRemindersAction;
     std::vector<QSignalMapper*> signal_mappers;
-    QTimer *timer;
+    std::vector<QTimer*> timers;
     unique_ptr<QAction> quitAction;
 
     QtReminder::ReminderManager manager{};
