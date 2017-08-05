@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QMainWindow>
 #include <QMenu>
+#include <QSignalMapper>
 #include <QSystemTrayIcon>
 #include <QTimer>
 
@@ -33,10 +34,12 @@ public:
 private slots:
     void showAllReminders();
     void showCreateReminderWindow();
-    void showReminder();
+    void showReminder(const QString);
 
-// Private variables
-    void on_pushButton_clicked();
+    void on_removeReminderButton_clicked();
+
+signals:
+    void timeToRemind(const QString);
 
 private:
     Ui::MainWindow *ui;
@@ -50,7 +53,8 @@ private:
 
     unique_ptr<QAction> addReminderAction;
     unique_ptr<QAction> showAllRemindersAction;
-    QTimer* timer;
+    std::vector<QSignalMapper*> signal_mappers;
+    QTimer *timer;
     unique_ptr<QAction> quitAction;
 
     QtReminder::ReminderManager manager{};

@@ -23,8 +23,11 @@ Reminder::Reminder(QDateTime &run_time, const shared_ptr<wstring> title, const s
 Reminder::Reminder(const Reminder &r):
     title{r.title}, description{r.description}, reminder_id{r.reminder_id}, cyclic{r.cyclic}
 {
-    this->run_time.swap(run_time);
-    this->created.swap(created);
+    QDateTime tmp_created{r.created};
+    QDateTime tmp_run_time{r.run_time};
+
+    this->created.swap(tmp_created);
+    this->run_time.swap(tmp_run_time);
 }
 
 std::wstring* Reminder::getTitle()
@@ -41,5 +44,26 @@ bool Reminder::isCyclic()
 {
     return this->cyclic;
 }
+
+Reminder& Reminder::operator =(const Reminder &r)
+{
+    QDateTime tmp_run_time{r.run_time};
+    QDateTime tmp_created{r.created};
+
+    this->created.swap(tmp_created);
+    this->cyclic = r.cyclic;
+    this->description = r.description;
+    this->reminder_id = r.reminder_id;
+    this->run_time.swap(tmp_run_time);
+    this->title = r.title;
+    return *this;
+}
+
+QUuid Reminder::getReminderId()
+{
+    return this->reminder_id;
+}
+
+Reminder::~Reminder() {}
 
 } // namespace QtReminder

@@ -13,6 +13,8 @@ namespace QtReminder
  */
 class Reminder
 {
+
+private:
     /// Time where object was created
     QDateTime created;
 
@@ -55,7 +57,7 @@ public:
      * @brief Reminder - Ctor
      * @param r - reminder to copy
      */
-    Reminder(Reminder const&);
+    Reminder(const Reminder &);
 
     /**
      * @brief getTitle - Title of reminder
@@ -74,6 +76,23 @@ public:
      * @return QDateTime object
      */
     QDateTime getRunTime();
+
+    /**
+     * @brief operator = Overrider operator
+     * @return reference
+     */
+    Reminder &operator =(const Reminder &);
+
+    /**
+     * @brief getReminderId - getter for reminder_id
+     * @return const QUuid
+     */
+    QUuid getReminderId();
+
+    /**
+      * @brief ~Reminder - Dtor
+      */
+    ~Reminder();
 };
 
 }
