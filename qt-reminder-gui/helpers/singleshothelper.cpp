@@ -2,13 +2,14 @@
 
 #include <QtCore>
 
-SingleShotHelper::SingleShotHelper(QtReminder::Reminder &r):
-    r{&r}
+SingleShotHelper::SingleShotHelper(QtReminder::Reminder &r, QObject *parent):
+    QObject{parent}, r{&r}
 {
 }
 
-void SingleShotHelper::shot()
+void SingleShotHelper::showReminder()
 {
     qDebug()<<r->getReminderId().toString() <<" " <<r->getTitle();
+    emit reminderShown(r->getReminderId());
     delete this;
 }

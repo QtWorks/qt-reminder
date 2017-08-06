@@ -6,10 +6,10 @@
 #include <QDateTime>
 #include <QMainWindow>
 #include <QMenu>
-#include <QSignalMapper>
 #include <QSystemTrayIcon>
-#include <QTimer>
+#include <QUuid>
 
+#include <helpers/cyclictaskhelper.h>
 #include <QtReminder/Reminder.h>
 #include <QtReminder/ReminderManager.h>
 
@@ -34,12 +34,9 @@ public:
 private slots:
     void showAllReminders();
     void showCreateReminderWindow();
-    void showReminder(const QString);
 
     void on_removeReminderButton_clicked();
-
-signals:
-    void timeToRemind(const QString);
+    void onReminderShown(const QUuid);
 
 private:
     Ui::MainWindow *ui;
@@ -53,11 +50,11 @@ private:
 
     unique_ptr<QAction> addReminderAction;
     unique_ptr<QAction> showAllRemindersAction;
-    std::vector<QSignalMapper*> signal_mappers;
-    std::vector<QTimer*> timers;
     unique_ptr<QAction> quitAction;
 
     QtReminder::ReminderManager manager{};
+
+    std::vector<CyclicTaskHelper*> cyclic_tasks;
 
     void addReminderToWidgetList(QtReminder::Reminder&);
     void registerReminder(QtReminder::Reminder&);

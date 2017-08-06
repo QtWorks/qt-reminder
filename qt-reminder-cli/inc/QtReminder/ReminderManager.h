@@ -1,6 +1,10 @@
 #ifndef REMINDERMANAGER
 #define REMINDERMANAGER
+
 #include <vector>
+
+#include <QUuid>
+
 #include <QtReminder/Reminder.h>
 
 using QtReminder::Reminder;
@@ -12,6 +16,14 @@ class ReminderManager
 {
     /// Reminders container
     std::vector<Reminder> reminders;
+
+    /**
+     * @brief getElementIterator - Function return iterator to element with id
+     * @param reminder_id - id of element
+     * @return iterator
+     */
+    std::vector<Reminder>::iterator getElementIterator(const QUuid);
+
 public:
 
     /**
@@ -21,16 +33,29 @@ public:
     ~ReminderManager();
 
     /**
-     * @brief append_reminder - function appending reminder to container
+     * @brief appendReminder - function appending reminder to container
      * @param r - Reminder object
      */
-    void append_reminder(Reminder&);
+    void appendReminder(Reminder&);
 
     /**
-     * @brief remove_reminder - function removing reminder from container
+     * @brief removeReminder - function removing reminder from container
      * @param index - index of element
      */
-    void remove_reminder(int);
+    void removeReminder(const int);
+
+    /**
+     * @brief removeReminder - function removing reminder from container
+     * @param reminder_id - id of element
+     */
+    void removeReminder(const QUuid);
+
+    /**
+     * @brief getReminderIndex - get index of reminder with id
+     * @param reminder_id - id of element
+     * @return index of element
+     */
+    const int getReminderIndex(const QUuid);
 };
 
 }

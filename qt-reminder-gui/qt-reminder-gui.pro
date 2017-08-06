@@ -23,13 +23,15 @@ SOURCES += main.cpp \
         createreminderdialog.cpp \
         ../qt-reminder-cli/src/QtReminder/Reminder.cpp \
         ../qt-reminder-cli/src/QtReminder/ReminderManager.cpp \
-    helpers/singleshothelper.cpp
+    helpers/singleshothelper.cpp \
+    helpers/cyclictaskhelper.cpp
 
 HEADERS += mainwindow.h \
            createreminderdialog.h \
            ../qt-reminder-cli/inc/QtReminder/Reminder.h \
            ../qt-reminder-cli/inc/QtReminder/ReminderManager.h \
-    helpers/singleshothelper.h
+    helpers/singleshothelper.h \
+    helpers/cyclictaskhelper.h
 
 FORMS    += mainwindow.ui \
             createreminderdialog.ui

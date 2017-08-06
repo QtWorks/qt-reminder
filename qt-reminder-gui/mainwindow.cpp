@@ -9,6 +9,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QMessageBox>
+#include <QTimer>
 
 
 using QtReminder::Reminder;
@@ -58,14 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete this->ui;
-    for(auto timer: this->timers)
+    for(auto task: this->cyclic_tasks)
     {
-        timer->stop();
-        delete timer;
-    }
-    for(auto sm: this->signal_mappers)
-    {
-        delete sm;
+        delete task;
     }
 }
 
@@ -97,7 +93,7 @@ void MainWindow::createReminder(QDateTime run_time, const shared_ptr<wstring> ti
 {
     Reminder *r = new Reminder{run_time, title, description, cyclic};
     this->addReminderToWidgetList(*r);
-    this->manager.append_reminder(*r);
+    this->manager.appendReminder(*r);
     this->registerReminder(*r);
 }
 
@@ -108,42 +104,40 @@ void MainWindow::removeReminder(int item_index)
     QListWidgetItem *item = this->ui->listWidget->takeItem(item_index);
 
     this->ui->listWidget->removeItemWidget(item);
-    this->manager.remove_reminder(item_index);
+    this->manager.removeReminder(item_index);
 
     delete item;
 }
 
-void MainWindow::showReminder(const QString reminder_id_str)
-{
-    qDebug()<<"REMINDER!!!!!!!!!!!!!111" <<reminder_id_str;
-}
-
 void MainWindow::registerReminder(QtReminder::Reminder &r)
 {
-    auto now = QDateTime::currentDateTime();
-
     if(r.isCyclic())
     {
-        auto *sm = new QSignalMapper{this};
-        auto *timer = new QTimer{this};
-
-        this->signal_mappers.push_back(sm);
-        this->timers.push_back(timer);
-
-        connect(timer, SIGNAL(timeout()), sm, SLOT(map()));
-        sm->setMapping(timer, r.getReminderId().toString());
-        connect(sm, SIGNAL(mapped(QString)), this, SIGNAL(timeToRemind(const QString)));
-        connect(this, SIGNAL(timeToRemind(const QString)), this, SLOT(showReminder(const QString)));
-        timer->start(now.msecsTo(r.getRunTime()));
+        auto *task = new CyclicTaskHelper{r, this};
+        this->cyclic_tasks.push_back(task);
+        task->runTimer();
     }
     else
     {
-        SingleShotHelper *ssh = new SingleShotHelper(r);
-        QTimer::singleShot(now.msecsTo(r.getRunTime()), [ssh](){ ssh->shot(); });
+        auto now = QDateTime::currentDateTime();
+        SingleShotHelper *ssh = new SingleShotHelper{r};
+        connect(ssh, SIGNAL(reminderShown(const QUuid)), this, SLOT(onReminderShown(const QUuid)));
+        QTimer::singleShot(now.msecsTo(r.getRunTime()), [ssh](){ ssh->showReminder(); });
     }
 }
 
 void MainWindow::on_removeReminderButton_clicked()
 {
     this->removeReminder(this->ui->listWidget->currentRow());
+}
+
+void MainWindow::onReminderShown(const QUuid reminder_id)
+{
+    const int index = this->manager.getReminderIndex(reminder_id);
+    QListWidgetItem *item = this->ui->listWidget->takeItem(index);
+
+    this->ui->listWidget->removeItemWidget(item);
+    this->manager.removeReminder(reminder_id);
+
+    delete item;
 }
